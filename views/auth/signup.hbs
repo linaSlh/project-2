@@ -1,0 +1,33 @@
+<div id="form">
+  <h2>Signup</h2>
+  <form action="/signup" method="POST">
+
+   {{!-- <label> Role
+      <select name="role">
+        <option value="visitor">Visitor</option>
+        <option value="admin">Admin</option>
+      </select>
+    </label> --}}
+ 
+    <label> Username
+      <input type="text" name="username" placeholder="..." />
+    </label>
+ 
+    <label> Email
+      <input type="email" name="email" placeholder="test@test.com" />
+    </label>
+ 
+    <label> Password
+      <input type="password" name="password" placeholder ="********" />
+    </label>
+ 
+    <button type="submit">Create account</button>
+ 
+    {{!-- error message will be added here --}}
+  </form>
+</div>
+
+
+{{#if error}}
+  <p class="error-message">{{error}}</p>
+{{/if}}
