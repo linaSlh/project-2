@@ -2,7 +2,7 @@
 
 const { Schema, model } = require("mongoose");
 const User = require("./User.model"); // Import the userSchema or user model
-const validThemes = ['family', 'product', 'wedding', 'portrait'];
+const validThemes = ['family', 'product', 'wedding', 'portrait','baby'];
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const sessionSchema = new Schema(
