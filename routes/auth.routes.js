@@ -1,9 +1,13 @@
 const express = require('express');
+const session = require('express-session');
+const exphbs = require('express-handlebars');
 const router = express.Router();
+const Session = require("../models/session.model");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const User = require("../models/User.model");
-const {isLoggedIn, isLoggedOut} = require('../middlewares/route-guard');
+const {isLoggedIn, isLoggedOut,isAdmin} = require('../middlewares/route-guard');
+
 
 
 /* GET signup page */
@@ -37,17 +41,12 @@ router.post("/signup", async (req, res, next) => {
     const newUser = await User.create({ username, email, password: hashedPassword });
 
     // Redirect to profile page upon successful signup
-    res.redirect('/profile');
+    res.redirect('/login');
     
   } catch (error) {
     console.error(error);
     res.render("auth/signup", { error: "An error occurred. Please try again." });
   }
-});
-
-// Get profile page
-router.get("/profile", (req, res, next) => {
-  res.render("auth/profile");
 });
 
 //get login page//
@@ -77,7 +76,10 @@ try {
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (passwordMatch) {
-        // req.session.currentUser = user;
+        req.session.currentUser = user;
+        console.log(req.session.currentUser);
+      
+        
         res.render('auth/profile', user);
     } else {
         console.log("Incorrect password. ");
@@ -90,18 +92,92 @@ try {
 
 });
 
-router.post('/logout', isLoggedIn, (req, res, next) => {
+router.post('/logout', (req, res, next) => {
 req.session.destroy(err => {
     if (err) next(err);
     res.redirect('/');
 });
 });
 
-/* GET Profile page */
-router.get("/profile", isLoggedIn, (req, res, next) => {
-console.log("req.session", req.session);
-res.render("auth/profile");
+
+router.get("/profile",(req, res, next) => {
+  
+  res.render("auth/profile");
 });
 
 
+
+router.get("/create-event",isAdmin, (req, res, next) => {
+  
+  res.render("../views/event/create-event",{isAdmin: true} );
+  
+});
+
+
+    
+  router.post('/create-event', async (req, res) => {
+    try {
+      // Check if the user is an admin
+      if (req.session.currentUser && req.session.currentUser.role === 'admin') {
+        const { theme } = req.body; // Extract theme from request body
+  
+        if (!theme) {
+          // If theme is not provided in the request body
+          return res.status(400).json({ message: 'Theme is required' });
+        }
+  
+        // Create a new session with the current user as the owner
+        const newSession = await Session.create({ owner: req.session.currentUser._id, theme: theme });
+  
+        // Redirect to the page displaying all events after creating the session
+        res.redirect('/all-events');
+      } else {
+        // If the user is not an admin
+        return res.status(403).json({ message: 'Unauthorized' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+  //display all sessions//
+  router.get("/all-events", async (req, res) => {
+    try {
+      // Fetch all sessions from the database
+      const sessions = await Session.find({}).populate('owner').populate('client');
+      res.render("../views/event/all-events", { sessions: sessions });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+  
+
+
+//routes for user to select sessions //
+router.get('/select-session/:sessionId', async (req, res) => {
+    try {
+      // Check if the user is a normal user
+      if (req.session.currentUser && req.session.currentUser.role === 'visitor') {
+        const { sessionId } = req.params;
+  
+// Find the session and update its client field with the current user
+        const selectedSession = await Session.findByIdAndUpdate(
+          sessionId,
+          { client: req.session.currentUser._id, isAvailable: false },
+          { new: true }
+        );
+  
+        res.json(selectedSession);
+      } else {
+        res.status(403).json({ message: 'Unauthorized' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+  
+
+//END OF REQUEST//
 module.exports = router;
