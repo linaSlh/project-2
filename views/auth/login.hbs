@@ -1,21 +1,28 @@
+<head>
+  <link rel="stylesheet" href="/stylesheets/login.css" />
+</head>
 <h1>Login page</h1>
 
-<div id="form">
+<div id="form" class="login-container">
+  <div class="login-box">
   <h2>Login to book a session</h2>
   <form action="/login" method="POST">
- 
+ <div class="form-group">
     <label> Email
       <input type="email" name="email" placeholder="test@test.com" />
     </label>
- 
+ </div>
+ <div class="form-group">
     <label> Password
       <input type="password" name="password" placeholder="********" />
     </label>
- 
+ </div>
     <button type="submit">Login</button>
  
     {{#if errorMessage}}
         <p>{{errorMessage}}</p>
     {{/if}}
+       </div>
+    </div>
   </form>
 </div>

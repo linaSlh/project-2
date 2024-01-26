@@ -1,8 +1,13 @@
 
-
+<head>
+  <link rel="stylesheet" href="/stylesheets/profile.css" />
+</head>
+<div class="main">
+  
 <h1>Welcome to your profile, {{ user.username }}</h1>
     
     <h2>Your Selected Sessions:</h2>
+    <div class="user-sessions">
     <ul>
         {{#each sessions}}
             <li>
@@ -14,9 +19,11 @@
             <!-- Add more session details as needed -->
         {{/each}}
 
+</div>
 
-
-
+<div id="logout">
 <form action="/logout" method="post">
-  <button type="submit">Logout</button>
+  <button type="submit"><b>Logout</b></button>
 </form>
+</div>
+</div>

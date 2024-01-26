@@ -1,29 +1,30 @@
-<div id="form">
+<head> <link rel="stylesheet" href="/stylesheets/signup.css" /></head>
+
+<div id="form" class="signup-container">
+  <div class="login-box">
   <h2>Signup</h2>
   <form action="/signup" method="POST">
 
-   {{!-- <label> Role
-      <select name="role">
-        <option value="visitor">Visitor</option>
-        <option value="admin">Admin</option>
-      </select>
-    </label> --}}
- 
+<div class="form-group">
     <label> Username
       <input type="text" name="username" placeholder="..." />
     </label>
- 
+    </div>
+  <div class="form-group">
     <label> Email
       <input type="email" name="email" placeholder="test@test.com" />
     </label>
- 
+  </div>
+   <div class="form-group">
     <label> Password
       <input type="password" name="password" placeholder ="********" />
     </label>
- 
+ </div>
     <button type="submit">Create account</button>
  
     {{!-- error message will be added here --}}
+      </div>
+    </div>
   </form>
 </div>
 

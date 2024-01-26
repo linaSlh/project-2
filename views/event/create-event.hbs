@@ -1,13 +1,18 @@
+<head>
+  <link rel="stylesheet" href="/stylesheets/create-event.css" />
+</head>
+<div class="container-box">
 <h1>create event here!</h1>
 {{#if isAdmin}}
-  <form action="/create-event" method="post">
-      <label> theme
+  <form action="/create-event" method="post" >
+      <label class="label-theme"> theme
       <input type="theme" name="theme" placeholder="insert theme" />
     </label>
-  <input>description
+  
   <button type="submit">create an event</button>
 </form>
 {{else}}
   <!-- Handle non-admin users here -->
   <p>You are not an admin.</p>
 {{/if}}
+</div>

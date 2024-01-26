@@ -141,7 +141,7 @@ router.post('/remove-session/:sessionId', async (req, res) => {
             { new: true }
         );
 
-        res.redirect('/profile/' + req.session.currentUser._id); // Redirect back to the user's profile
+        res.redirect(`/profile/${req.session.currentUser._id}`); // Redirect back to the user's profile
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -180,7 +180,7 @@ router.get("/create-event",isAdmin, (req, res, next) => {
         // Redirect to the page displaying all events after creating the session
         res.redirect('/all-events');
       } else {
-        // If the user is not an admin
+        // res.redirect('/login');
         return res.status(403).json({ message: 'Unauthorized' });
       }
     } catch (error) {
@@ -215,10 +215,12 @@ router.get('/select-session/:sessionId', async (req, res) => {
           { client: req.session.currentUser._id, isAvailable: false },
           { new: true }
         );
-  
-        res.json(selectedSession);
+        
+        // res.json(selectedSession);
+        res.redirect(`/profile/${req.session.currentUser._id}`);
       } else {
-        res.status(403).json({ message: 'Unauthorized' });
+        res.redirect('/login');
+        // res.status(403).json({ message: 'Unauthorized' });
       }
     } catch (error) {
       console.error(error);

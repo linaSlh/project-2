@@ -1,19 +1,7 @@
-{{!-- <h1>Events list</h1>
- <ul>
-    
-        {{#each sessions}}
-            <li>
-                <strong>Theme:</strong> {{this.theme}}
-                <br>
-                <strong>Photographer:</strong> {{this.owner.username}}
-                <br>
-                <strong>Status:</strong> {{#if this.isAvailable}} Available {{else}} Not Available {{/if}}
-            </li>
-        {{/each}}
-    </ul> --}}
-
-    <!-- all-events.hbs -->
-
+<head>
+  <link rel="stylesheet" href="/stylesheets/all-events.css" />
+</head>
+<div class="container">
 <h1>Events List</h1>
 
 <ul>
@@ -29,3 +17,4 @@
     </li>
     {{/each}}
 </ul>
+</div>

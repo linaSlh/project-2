@@ -1,12 +1,187 @@
+/* Style for the navigation bar */
+/* Simplified CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+   
+  font-family:  'Roboto', sans-serif;
+  /* line-height: 1.5; */
+}
+
+ul, ol {
+  list-style: none;
 }
 
 a {
-  color: #00b7ff;
+  text-decoration: none;
+  color: inherit;
 }
 
-h1 {
-  color: 15px;
+h1{
+  font-size: 50px;
+  padding-bottom: 8px;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Translucent black */
+  justify-content: space-between;
+  color: white;
+  padding: 10px 20px; /* Adjust padding as needed */
+  z-index: 1000; /* Ensure the navbar is above other content */
+}
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+}
+
+/* Style for the navigation links */
+.navbar ul li {
+  
+  display: inline; /* Display links horizontally */
+  margin-right: 20px; /* Adjust spacing between links as needed */
+}
+
+/* Style for the logo */
+.logo {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 70px; /* Adjust as needed */
+  left: 20px; /* Adjust as needed */
+  /*z-index: 999; /* Ensure the logo is above other content */
+
+}
+.hero {
+  padding-top: 150px; /* Adjust as needed based on the height of the navbar */
+}
+
+.slideshow-container {
+  
+  display: flex;
+  overflow: hidden;
+  width: 80%; /* Adjust the width of the slideshow */
+  height: 600px; /* Adjust height as needed */
+  position: relative;
+  margin: 0 auto; /* Center the slideshow */
+}
+
+.slide {
+  padding-top: 50px;
+  flex: 0 0 auto;
+  width: 100%;
+  transition: transform 1s ease-in-out; /* Adjust duration and timing function as needed */
+}
+
+
+/* Animation to slide images */
+@keyframes slide {
+
+/* } */
+0% { transform: translateX(0); }
+25% { transform: translateX(0); } /* Start transition */
+30% { transform: translateX(-100%); } /* End of first image */
+50% { transform: translateX(-100%); }
+55% { transform: translateX(-200%); } /* End of second image */
+75% { transform: translateX(-200%); }
+80% { transform: translateX(-300%); } /* End of third image */
+100% { transform: translateX(-300%); }
+}
+
+/* Apply animation to slides */
+.slide {
+  animation: slide 15s linear infinite; /* Adjust duration as needed */
+}
+
+
+/* Ensure images fill the container */
+.slide img {
+    width:  auto;
+    height: 100%; /* Adjust this as needed to maintain aspect ratio */
+    object-fit: contain; /* Ensures the image covers the entire container */
+  }
+
+.align{
+  align-items: center;
+  text-align: center;
+}
+
+.services{
+  
+  font-weight: 5px;
+  width: 80%;
+  text-align: center;
+  margin: 0 auto; 
+  
+}
+
+.services p {
+  color: rgb(74, 73, 73);
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 50px;
+}
+
+
+.about {
+  
+  padding-top: 30px;
+  text-align: center;
+  margin-bottom: 100px;
+
+}
+.about h2 {
+  font-size: 40px;
+  padding-top: 70px;
+  padding-bottom: 15px;
+}
+
+.team-members {
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 100px;
+}
+
+.team-member {
+  flex-basis: 30%; /* Adjust as needed */
+}
+
+.team-member img {
+  width: 100%;
+  height: auto;
+  
+}
+.testimonials h2{
+margin-bottom: 50px;
+}
+
+.testimonials{
+  font-weight: 5px;
+  width: 80%;
+  text-align: center;
+  margin: 0 auto; 
+  margin-bottom: 50px;
+}
+.testimonial-box{
+  margin-top: 30px;
+  font-weight: bold;
+}
+.social-media  {
+  padding: 20px;
+  font-size: 30px;
+  width: 30px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 50%;
+  display: inline;
+  
 }
