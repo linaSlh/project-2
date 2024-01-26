@@ -1,11 +1,18 @@
-<h1>Welcome to your profile page {{username}}!</h1>
 
-{{!-- {{#if isAdmin}}
-  <form action="/create" method="post">
-  <button type="submit">create a session</button>
-</form>
 
-{{/if}} --}}
+<h1>Welcome to your profile, {{ user.username }}</h1>
+    
+    <h2>Your Selected Sessions:</h2>
+    <ul>
+        {{#each sessions}}
+            <li>
+                Session Theme: {{ theme }}
+                <form action="/remove-session/{{ _id }}" method="POST">
+                    <button type="submit">Remove Session</button>
+                </form>
+            </li>
+            <!-- Add more session details as needed -->
+        {{/each}}
 
 
 

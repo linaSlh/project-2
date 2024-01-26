@@ -80,7 +80,7 @@ try {
         console.log(req.session.currentUser);
       
         
-        res.render('auth/profile', user);
+        res.redirect(`/profile/${user._id}`);
     } else {
         console.log("Incorrect password. ");
         res.render('auth/login', { errorMessage: 'User not found and/or incorrect password.' });
@@ -99,11 +99,59 @@ req.session.destroy(err => {
 });
 });
 
+// Define a dynamic route for viewing profiles by user ID
+router.get("/profile/:userId", async (req, res, next) => {
+  try {
+      // Extract the user ID from the request parameters
+      const userId = req.params.userId;
 
-router.get("/profile",(req, res, next) => {
-  
-  res.render("auth/profile");
+      // Find the user associated with the provided ID
+      const user = await User.findById(userId);
+
+      if (!user) {
+          // If the user is not found, return a 404 status
+          return res.status(404).json({ message: 'User not found' });
+      }//added//
+      if (!user) {
+        // If the user is not found, return a 404 status
+        return res.status(404).json({ message: 'User not found' });
+    }
+      // Find sessions associated with the user
+      const userSessions = await Session.find({ client: userId });
+
+      // Render the profile page with user information and their sessions
+      res.render("auth/profile", { user: user, sessions: userSessions });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
+
+//delete events 
+
+// Route to remove a session from the user's profile
+router.post('/remove-session/:sessionId', async (req, res) => {
+    try {
+        const { sessionId } = req.params;
+
+        // Find the session by ID and update its client field to null
+        const removedSession = await Session.findByIdAndUpdate(
+            sessionId,
+            { client: null, isAvailable: true }, // Reset client to null and set isAvailable to true
+            { new: true }
+        );
+
+        res.redirect('/profile/' + req.session.currentUser._id); // Redirect back to the user's profile
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+module.exports = router;
+
+
+
 
 
 
